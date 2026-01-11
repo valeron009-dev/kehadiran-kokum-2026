@@ -1,12 +1,12 @@
 
 import React, { useState, useEffect } from 'react';
-import { fetchAllKokumData } from './services/googleSheetService.ts';
-import { SheetData, AttendanceRecord } from './types.ts';
-import LogoHeader from './components/LogoHeader.tsx';
-import AttendanceForm from './components/AttendanceForm.tsx';
-import HistoryView from './components/HistoryView.tsx';
-import PDFTemplate from './components/PDFTemplate.tsx';
-import { STORAGE_KEY } from './constants.tsx';
+import { fetchAllKokumData } from './services/googleSheetService';
+import { SheetData, AttendanceRecord } from './types';
+import LogoHeader from './components/LogoHeader';
+import AttendanceForm from './components/AttendanceForm';
+import HistoryView from './components/HistoryView';
+import PDFTemplate from './components/PDFTemplate';
+import { STORAGE_KEY } from './constants';
 import { Loader2, LayoutGrid, Clock } from 'lucide-react';
 
 const App: React.FC = () => {
