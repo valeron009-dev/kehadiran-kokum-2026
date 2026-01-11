@@ -1,13 +1,13 @@
 
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState, useEffect } from 'react';
 import { fetchAllKokumData } from './services/googleSheetService';
-import { SheetData, AttendanceRecord, Category } from './types';
-import LogoHeader from './components/LogoHeader';
-import AttendanceForm from './components/AttendanceForm';
-import HistoryView from './components/HistoryView';
-import PDFTemplate from './components/PDFTemplate';
-import { STORAGE_KEY } from './constants';
-import { Loader2, LayoutGrid, Clock, AlertCircle } from 'lucide-react';
+import { SheetData, AttendanceRecord } from './types';
+import LogoHeader from './components/LogoHeader.tsx';
+import AttendanceForm from './components/AttendanceForm.tsx';
+import HistoryView from './components/HistoryView.tsx';
+import PDFTemplate from './components/PDFTemplate.tsx';
+import { STORAGE_KEY } from './constants.tsx';
+import { Loader2, LayoutGrid, Clock } from 'lucide-react';
 
 const App: React.FC = () => {
   const [loading, setLoading] = useState(true);
@@ -24,13 +24,12 @@ const App: React.FC = () => {
         const data = await fetchAllKokumData();
         setSheetData(data);
         
-        // Load local records
         const saved = localStorage.getItem(STORAGE_KEY);
         if (saved) {
           setRecords(JSON.parse(saved));
         }
       } catch (err) {
-        console.error("Data load failed:", err);
+        console.error("Gagal memuatkan data:", err);
       } finally {
         setLoading(false);
       }
@@ -69,7 +68,6 @@ const App: React.FC = () => {
     setGeneratingPDF(true);
     setCurrentPDFRecord(record);
 
-    // Wait for state to update and render component
     setTimeout(async () => {
       const element = document.getElementById(`pdf-report-${record.id}`);
       if (!element) return;
@@ -95,7 +93,7 @@ const App: React.FC = () => {
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
         pdf.save(`LAPORAN_KOKUM_${record.unit.replace(/\s+/g, '_')}_${record.date}.pdf`);
       } catch (err) {
-        console.error("PDF gen failed:", err);
+        console.error("Gagal menjana PDF:", err);
       } finally {
         setGeneratingPDF(false);
         setCurrentPDFRecord(null);
@@ -107,7 +105,7 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
         <Loader2 className="w-12 h-12 text-yellow-500 animate-spin mb-4" />
-        <p className="text-gray-500 font-medium uppercase tracking-widest">Memuatkan Data KOKUM 2026...</p>
+        <p className="text-gray-500 font-medium uppercase tracking-widest text-sm">Sila Tunggu, Memuatkan Data KOKUM 2026...</p>
       </div>
     );
   }
@@ -117,7 +115,6 @@ const App: React.FC = () => {
       <LogoHeader />
 
       <main className="max-w-6xl mx-auto px-4 mt-8">
-        {/* Navigation Tabs */}
         <div className="flex bg-white p-1 rounded-2xl shadow-sm border border-gray-100 mb-8 max-w-md mx-auto">
           <button 
             onClick={() => { setActiveTab('new'); setEditingRecord(undefined); }}
@@ -151,12 +148,10 @@ const App: React.FC = () => {
         )}
       </main>
 
-      {/* Footer Info */}
-      <footer className="mt-12 text-center text-gray-400 text-xs uppercase tracking-tighter">
+      <footer className="mt-12 text-center text-gray-400 text-[10px] uppercase tracking-widest">
         &copy; 2026 SK Petagas - Sistem Pengurusan Kehadiran Kokurikulum
       </footer>
 
-      {/* Hidden PDF Templates for Generation */}
       {generatingPDF && currentPDFRecord && (
         <div className="fixed -left-[10000px] top-0 opacity-0 pointer-events-none">
           <PDFTemplate 
@@ -166,13 +161,12 @@ const App: React.FC = () => {
         </div>
       )}
 
-      {/* Loading Overlay for PDF */}
       {generatingPDF && (
         <div className="fixed inset-0 bg-black/50 backdrop-blur-sm flex items-center justify-center z-50">
           <div className="bg-white p-8 rounded-3xl shadow-2xl flex flex-col items-center">
             <Loader2 className="w-10 h-10 text-blue-500 animate-spin mb-4" />
             <p className="font-bold text-gray-800 uppercase text-sm">Menjana Laporan PDF...</p>
-            <p className="text-gray-400 text-xs mt-1 uppercase">Sila tunggu sebentar</p>
+            <p className="text-gray-400 text-[10px] mt-1 uppercase">Sila tunggu sebentar</p>
           </div>
         </div>
       )}
