@@ -1,0 +1,7 @@
+{
+  "name": "Sistem Kehadiran KOKUM 2026",
+  "description": "Sistem pengurusan kehadiran kokurikulum bersepadu dengan integrasi Google Sheets dan penjanaan laporan PDF.",
+  "requestFramePermissions": [
+    "camera"
+  ]
+}
