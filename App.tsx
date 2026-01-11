@@ -1,7 +1,7 @@
 
 import React, { useState, useEffect } from 'react';
-import { fetchAllKokumData } from './services/googleSheetService';
-import { SheetData, AttendanceRecord } from './types';
+import { fetchAllKokumData } from './services/googleSheetService.ts';
+import { SheetData, AttendanceRecord } from './types.ts';
 import LogoHeader from './components/LogoHeader.tsx';
 import AttendanceForm from './components/AttendanceForm.tsx';
 import HistoryView from './components/HistoryView.tsx';
@@ -105,7 +105,9 @@ const App: React.FC = () => {
     return (
       <div className="min-h-screen flex flex-col items-center justify-center bg-gray-50">
         <Loader2 className="w-12 h-12 text-yellow-500 animate-spin mb-4" />
-        <p className="text-gray-500 font-medium uppercase tracking-widest text-sm">Sila Tunggu, Memuatkan Data KOKUM 2026...</p>
+        <p className="text-gray-500 font-medium uppercase tracking-widest text-sm text-center">
+          Sila Tunggu...<br/>Sistem Sedang Memuatkan Data Murid
+        </p>
       </div>
     );
   }
